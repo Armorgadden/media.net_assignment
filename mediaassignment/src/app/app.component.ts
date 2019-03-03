@@ -17,7 +17,8 @@ export class AppComponent {
         return {
           ticker: stockArray[0],
           price: stockArray[1],
-          change: 0
+          change: 0,
+          time: Date.now()
         };
       });
 
@@ -26,6 +27,7 @@ export class AppComponent {
         if(index >= 0) {
           this.liveStockService.stockData[index].change = this.getChangeValue(this.liveStockService.stockData[index].price, formattedData[i].price, this.liveStockService.stockData[index].change);
           this.liveStockService.stockData[index].price = formattedData[i].price;
+          this.liveStockService.stockData[index].time = Date.now();
         } else {
           this.liveStockService.stockData.push(formattedData[i]);
         }

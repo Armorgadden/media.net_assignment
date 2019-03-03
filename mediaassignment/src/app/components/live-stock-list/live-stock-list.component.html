@@ -8,11 +8,11 @@
         <th scope="col">Last Updates</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody *ngFor="let stock of liveStockService.stockData">
       <tr>
-        <th scope="row">Frozen</th>
-        <td data-title="Released">2013</td>
-        <td data-title="Studio">Disney</td>
+        <th scope="row">{{stock.ticker}}</th>
+        <td data-title="Released" data-type="currency">{{stock.price}}</td>
+        <td data-title="Studio">{{stock.time}}</td>
       </tr>
     </tbody>
   </table>
