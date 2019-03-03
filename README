@@ -1,0 +1,7 @@
+To run this project perform the following steps:
+
+1. Install angular globally: npm install angular -g
+2. Install angular-cli globally: npm install angular-cli -g
+3. Install node modules: npm install
+4. Run the server: ng serve
+5. Go to http://localhost:4200 to view the site
