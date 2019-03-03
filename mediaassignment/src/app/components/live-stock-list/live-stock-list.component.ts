@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LiveStockService } from '../../services/live-stock.service';
 
 @Component({
   selector: 'app-live-stock-list',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LiveStockListComponent implements OnInit {
 
-  constructor() { }
+  constructor(public liveStockService: LiveStockService) { }
 
   ngOnInit() {
   }

@@ -1,20 +1,56 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { LiveStockService } from './services/live-stock.service';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.less']
 })
 export class AppComponent {
-  title = 'app';
+  constructor(public liveStockService: LiveStockService, public ref: ChangeDetectorRef) {
+    this.initializeStockFeed();
+  }
 
- constructor(private liveStockService: LiveStockService, public ref: ChangeDetectorRef) {
-    liveStockService.data.subscribe(data => {
-      liveStockService.oldStockData = liveStockService.stockData;
-      liveStockService.stockData = data;
-      ref.detectChanges();
-      console.log("Response from websocket: " + liveStockService.oldStockData);
-      console.log("Response from websocket: " + liveStockService.stockData);
+  initializeStockFeed() {
+    this.liveStockService.data.subscribe(data => {
+      let formattedData = data.map(stockArray => {
+        return {
+          ticker: stockArray[0],
+          price: stockArray[1],
+          change: 0
+        };
+      });
+
+      for(let i = 0; i < formattedData.length; i++) {
+        let index: any = this.checkIfDataPresentInStock(formattedData[i].ticker);
+        if(index >= 0) {
+          this.liveStockService.stockData[index].change = this.getChangeValue(this.liveStockService.stockData[index].price, formattedData[i].price, this.liveStockService.stockData[index].change);
+          this.liveStockService.stockData[index].price = formattedData[i].price;
+        } else {
+          this.liveStockService.stockData.push(formattedData[i]);
+        }
+      }
+      console.log(this.liveStockService.stockData);
+      this.ref.detectChanges();
     });
+  }
+
+  checkIfDataPresentInStock(data) {
+    for (let i = 0; i < this.liveStockService.stockData.length; i++) {
+      if (this.liveStockService.stockData[i].ticker === data) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  getChangeValue(oldPrice, newPrice, change) {
+    if(oldPrice > newPrice) {
+      return -1;
+    } else if(newPrice > oldPrice) {
+      return 1;
+    } else {
+      return change? change: 0;
+    }
   }
 }

@@ -11,8 +11,6 @@ export interface Message {
 export class LiveStockService {
 
   public socketUrl: string = "ws://stocks.mnet.website";
-
-  public oldStockData: any = [];
   public stockData: any = [];
   public data: Subject<any>;
 
