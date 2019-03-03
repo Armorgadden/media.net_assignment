@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { routing, appRoutingProviders } from './app.routes';
 import { CustErrorHandler } from './app.custErrorHandler';
+import { MomentModule } from 'angular2-moment';
 
 //Components
 import { AppComponent } from './app.component';
@@ -19,7 +20,8 @@ import { LiveStockService } from './services/live-stock.service';
   ],
   imports: [
     BrowserModule,
-    routing
+    routing,
+    MomentModule
   ],
   providers: [
     WebsocketService,
