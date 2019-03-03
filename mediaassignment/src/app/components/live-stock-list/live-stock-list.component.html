@@ -11,7 +11,7 @@
     <tbody *ngFor="let stock of liveStockService.stockData">
       <tr>
         <th scope="row">{{stock.ticker}}</th>
-        <td data-title="Released" data-type="currency">{{stock.price}}</td>
+        <td data-title="Released" data-type="currency" [ngClass]="{'red-back': stock.change === -1, 'green-back': stock.change === 1}">{{stock.price}}</td>
         <td data-title="Studio">{{stock.time}}</td>
       </tr>
     </tbody>
